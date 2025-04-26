@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
 
 const Login = () => {
-    const [user,setUser] = useState()
+    const [user,setUser] = useState(null)
 
     const provider = new GoogleAuthProvider()
     const githubProvider = new GithubAuthProvider()
@@ -46,7 +46,7 @@ const Login = () => {
     const handleGoogleSignOut=()=>{
         signOut(auth)
         .then(()=>{
-            setUser(' ')
+            setUser(null)
             console.log('Sign Out done')
         })
         .catch(error =>{
@@ -55,8 +55,9 @@ const Login = () => {
     }
     return (
        <>
-        <div>
-            Log in
+<div className='container mx-auto border border-gray-400 shadow-md mt-10 w-1/2 h-1/2 p-10'>
+        <div className='text-center flex flex-col gap-2 '>
+           
             <p><span className='font-bold'>User: </span>{user?.displayName}</p>
             <p><span className='font-bold'>Email: </span>{user?.email}</p>
         </div>
@@ -66,13 +67,16 @@ const Login = () => {
         <button onClick={handleGoogleSignOut}>Sign Out</button> */}
 
         {
-        user? <button onClick={handleGoogleSignOut}>Sign Out</button>
+        user? <div className='flex justify-center items-center mt-10'><button className='btn' onClick={handleGoogleSignOut}>Sign Out</button></div>
         :
        <>
-        <button onClick={handleGoogleSignIn}>Sign In With Google</button>
-        <button onClick={handleGithubSignIn}>Sign In With Github</button>
+        <div className='flex gap-4 justify-center mt-10'>
+        <button  className='btn' onClick={handleGoogleSignIn}>Sign In With Google</button>
+        <button className='btn' onClick={handleGithubSignIn}>Sign In With Github</button>
+        </div>
        </>
         }
+</div>
 
        </>
     );
