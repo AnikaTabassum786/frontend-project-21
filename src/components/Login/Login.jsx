@@ -26,6 +26,15 @@ const Login = () => {
         console.log('Clicked')
         signInWithPopup(auth,githubProvider)
         .then((result)=>{
+            const loggedInUser = result.user
+            if(!loggedInUser.email && loggedInUser?.providerData?.length){
+                
+               if(loggedInUser.providerData[0].email){
+                loggedInUser.email = loggedInUser.providerData[0].email
+                setUser(loggedInUser)
+               }
+               
+            }
             setUser(result.user)
             console.log(result.user,'Github sign in')
         })
@@ -48,8 +57,8 @@ const Login = () => {
        <>
         <div>
             Log in
-            <p>User{user?.displayName}</p>
-            <p>{user?.email}</p>
+            <p><span className='font-bold'>User: </span>{user?.displayName}</p>
+            <p><span className='font-bold'>Email: </span>{user?.email}</p>
         </div>
 
         {/* <button onClick={handleGoogleSignIn}>Sign In With Google</button>
